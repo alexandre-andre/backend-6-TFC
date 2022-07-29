@@ -10,14 +10,14 @@ console.log({ secret });
 
 const configToken: object = {
   expireIn: '2h',
-  algorithm: 'HS256'
+  algorithm: 'HS256',
 };
 
 function generateTokenJWT(payload: object) {
   return jwt.sign(
     payload,
     secret,
-    configToken
+    configToken,
   );
 }
 
@@ -28,14 +28,12 @@ function isAuthenticatedToken(token: string) {
 
   try {
     const tokenAuthenticated = jwt.verify(token, secret);
-    
+
     return tokenAuthenticated;
-    
-  } catch (error: any) { // error eh tipo oq ????
-    
-    console.error(error.message);
+  } catch (error: unknown) { // error eh tipo oq ????
+    console.error(error);
     throw new Error('Unauthorized token');
   }
 }
 
-export default { generateTokenJWT, isAuthenticatedToken };
+export { generateTokenJWT, isAuthenticatedToken };
