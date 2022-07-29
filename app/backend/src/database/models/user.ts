@@ -1,42 +1,34 @@
 import { Model, INTEGER, STRING } from 'sequelize';
 import db from '.';
 
-class Users extends Model {
-  id!: number;
-  username!: string;
-  role!: number;
-  email!: string;
-  password!: string;
+class User extends Model {
+  id?: number;
+  username: string;
+  role: string;
+  email: string;
+  password: string;
 }
 
-Users.init({
-  id: {
-    type: INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  username: {
-    type: STRING(30),
-    allowNull: false,
-  },
-  role: {
-    type: STRING(30),
-    allowNull: false,
-  },
-  email: {
-    type: STRING(100),
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: STRING(100),
-    allowNull: false,
-  },
-}, {
-  sequelize: db,
-  modelName: 'user', // model le o nome da migration para o singular
-  timestamps: false,
-});
+User.init(
+  {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: INTEGER,
 
-export default Users;
+    },
+    usernam: { allowNull: false, type: STRING(30) },
+    role: { allowNull: false, type: STRING(30) },
+    email: { allowNull: false, type: STRING(30) },
+    password: { type: STRING(30) },
+  },
+  {
+    sequelize: db,
+    modelName: 'user', // refere-se ao model
+    tableName: 'users', // refere-se a migration
+    timestamps: false,
+  },
+);
+
+export default User;

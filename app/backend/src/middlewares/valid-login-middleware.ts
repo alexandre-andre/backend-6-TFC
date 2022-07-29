@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import HttpException from '../utils/http-exception';
 import { STATUS_MESSAGE } from '../utils';
 
 const emailString = 'email';
@@ -10,11 +11,11 @@ const MIN_LENGTH_PASSWORD = 6;
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
-    throw new Error(STATUS_MESSAGE(emailString).NOT_FOUND);
+    throw new HttpException(404, STATUS_MESSAGE(emailString).notFound);
   }
 
   if (isEmailRegexValidation.test(email)) {
-    throw new Error(STATUS_MESSAGE(emailString).invalid);
+    throw new HttpException(401, STATUS_MESSAGE(emailString).invalid);
   }
 
   return true;
@@ -22,11 +23,11 @@ function isValidEmail(email: string) {
 
 function isValidPassword(password: string) {
   if (!password || password === undefined) {
-    throw new Error(STATUS_MESSAGE(passwordString).notFound);
+    throw new HttpException(404, STATUS_MESSAGE(passwordString).notFound);
   }
 
   if (password.length < MIN_LENGTH_PASSWORD) {
-    throw new Error(STATUS_MESSAGE(passwordString, MIN_LENGTH_PASSWORD).lesserThan);
+    throw new HttpException(401, STATUS_MESSAGE(passwordString, MIN_LENGTH_PASSWORD).lesserThan);
   }
 
   return true;

@@ -16,17 +16,17 @@ services:
       timeout: 10s
       retries: 5
   backend:
-    container_name: app_backend
-    build: ./backend
+    container_name: app_backend # nome do container 
+    build: ./backend # local onde pegar o arquivo DockerFile
     ports:
       - 3001:3001
-    working_dir: /app-backend
+    working_dir: /app-backend # pasta na qual vai trabalhar
     command: npm run dev
-    volumes: 
-      - ./backend/src:/app-backend/src
-    depends_on:
-      db:
-        condition: service_healthy
+    volumes: # onde o diretório será mapeado
+      - ./backend/src:/app-backend/src # local(./backend/src) : container(/app-backend/src)
+    depends_on: # depende de
+      db: # o container db estar on
+        condition: service_healthy # na condição dele estar on
     environment:
       - APP_PORT=3001
       - JWT_SECRET=jwt_secret

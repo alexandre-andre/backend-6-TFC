@@ -1,5 +1,5 @@
-// import handleError from "./handle-error";
+import handleError from "./handle-error";
 
-// export {
-//   handleError
-// };
+export {
+  handleError
+};

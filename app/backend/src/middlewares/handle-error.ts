@@ -1,9 +1,12 @@
-// import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import HttpException from '../utils/http-exception';
 
-// export default function handleError(err: Error, req: Request, res: Response, next: NextFunction) {
-//   if (!err) next();
+export default function handleError(err: Error, req: Request, res: Response, next: NextFunction) {
+  if (!err) next();
 
-//   return res
-//     .status(err.status || 500)
-//     .json({ message: err.message || 'Server internal error.' });
-// }
+  const { status, message } = err as HttpException;
+
+  return res
+    .status(status || 500)
+    .json({ message: message || 'Server internal error.' });
+}

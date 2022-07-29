@@ -4,16 +4,16 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const secret: string = process.env.JWT_SECRET || 'typescriptNaoVaiMeVencer';
+const secret: jwt.Secret = process.env.JWT_SECRET || 'typescriptNaoVaiMeVencer';
 
 console.log({ secret });
 
-const configToken: object = {
-  expireIn: '2h',
+const configToken: jwt.SignOptions = {
+  expiresIn: '2h',
   algorithm: 'HS256',
 };
 
-function generateTokenJWT(payload: object) {
+function generateTokenJWT(payload: jwt.Jwt) { // SignOptions o
   return jwt.sign(
     payload,
     secret,
