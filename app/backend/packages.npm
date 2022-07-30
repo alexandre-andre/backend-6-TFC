@@ -1,1 +1,3 @@
 express-async-errors
+bcryptjs
+http-status-codes

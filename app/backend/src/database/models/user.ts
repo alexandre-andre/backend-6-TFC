@@ -2,7 +2,7 @@ import { Model, INTEGER, STRING } from 'sequelize';
 import db from '.';
 
 class User extends Model {
-  id?: number;
+  id: number;
   username: string;
   role: string;
   email: string;
@@ -16,9 +16,8 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
       type: INTEGER,
-
     },
-    usernam: { allowNull: false, type: STRING(30) },
+    username: { allowNull: false, type: STRING(30) },
     role: { allowNull: false, type: STRING(30) },
     email: { allowNull: false, type: STRING(30) },
     password: { type: STRING(30) },

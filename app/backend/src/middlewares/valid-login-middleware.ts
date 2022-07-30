@@ -1,21 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
-import HttpException from '../utils/http-exception';
-import { STATUS_MESSAGE } from '../utils';
+console.log('MIDDLEWARE >>>>>>>>>>>>>>>>>>');
 
-const emailString = 'email';
-// eslint-disable-next-line max-len
-const isEmailRegexValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-const passwordString = 'password';
-const MIN_LENGTH_PASSWORD = 6;
+import {
+  STATUS_MESSAGE,
+  HttpException,
+  stringEmail,
+  stringPassword,
+  MIN_LENGTH_PASSWORD,
+  isEmailRegexValidation,
+} from '../utils';
+import ILogin from '../interface';
+import { StatusCodes } from 'http-status-codes';
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
-    throw new HttpException(404, STATUS_MESSAGE(emailString).notFound);
+    throw new HttpException(StatusCodes.NOT_FOUND, STATUS_MESSAGE(stringEmail).notFound);
   }
 
-  if (isEmailRegexValidation.test(email)) {
-    throw new HttpException(401, STATUS_MESSAGE(emailString).invalid);
+  if (!isEmailRegexValidation.test(email)) {
+    throw new HttpException(StatusCodes.UNAUTHORIZED, STATUS_MESSAGE(stringEmail).invalid);
   }
 
   return true;
@@ -23,18 +26,18 @@ function isValidEmail(email: string) {
 
 function isValidPassword(password: string) {
   if (!password || password === undefined) {
-    throw new HttpException(404, STATUS_MESSAGE(passwordString).notFound);
+    throw new HttpException(StatusCodes.NOT_FOUND, STATUS_MESSAGE(stringPassword).notFound);
   }
 
   if (password.length < MIN_LENGTH_PASSWORD) {
-    throw new HttpException(401, STATUS_MESSAGE(passwordString, MIN_LENGTH_PASSWORD).lesserThan);
+    throw new HttpException(StatusCodes.UNAUTHORIZED, STATUS_MESSAGE(stringPassword, MIN_LENGTH_PASSWORD).lesserThan);
   }
 
   return true;
 }
 
-function isValidLogin(req: Request, res: Response, next: NextFunction) {
-  const { email, password } = req.body;
+function isValidLogin(req: Request, _res: Response, next: NextFunction) {
+  const { email, password }: ILogin = req.body;
 
   isValidEmail(email);
   isValidPassword(password);
@@ -43,3 +46,5 @@ function isValidLogin(req: Request, res: Response, next: NextFunction) {
 }
 
 export default isValidLogin;
+
+console.log('<<<<<<<<<<<<< MIDDLEWARE');

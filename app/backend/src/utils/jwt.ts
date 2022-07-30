@@ -1,19 +1,19 @@
 import * as jwt from 'jsonwebtoken';
 // https://dev.to/francis04j/how-to-add-env-and-use-process-env-to-your-typescript-project-3d6b
 import * as dotenv from 'dotenv';
+import { IUser } from '../database/models/interface';
+import { stringToken, STATUS_MESSAGE, HttpException } from '.';
 
 dotenv.config();
 
 const secret: jwt.Secret = process.env.JWT_SECRET || 'typescriptNaoVaiMeVencer';
-
-console.log({ secret });
 
 const configToken: jwt.SignOptions = {
   expiresIn: '2h',
   algorithm: 'HS256',
 };
 
-function generateTokenJWT(payload: jwt.Jwt) { // SignOptions o
+function generateTokenJWT(payload: Omit<IUser, 'id' & 'password'>) {
   return jwt.sign(
     payload,
     secret,
@@ -23,7 +23,7 @@ function generateTokenJWT(payload: jwt.Jwt) { // SignOptions o
 
 function isAuthenticatedToken(token: string) {
   if (!token) {
-    throw new Error('Token not found.');
+    throw new HttpException(404, STATUS_MESSAGE(stringToken).notFound);
   }
 
   try {
@@ -32,7 +32,7 @@ function isAuthenticatedToken(token: string) {
     return tokenAuthenticated;
   } catch (error: unknown) { // error eh tipo oq ????
     console.error(error);
-    throw new Error('Unauthorized token');
+    throw new HttpException(401, STATUS_MESSAGE(stringToken).invalid);
   }
 }
 
