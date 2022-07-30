@@ -5,6 +5,8 @@ import * as mid from '../middlewares';
 
 const loginRouter = Router();
 
-loginRouter.post('/', mid.isValidLogin, LoginController.prototype.postLogin);
+const login = new LoginController();
+
+loginRouter.post('/', mid.isValidLogin, login.postLogin);
 
 export default loginRouter;

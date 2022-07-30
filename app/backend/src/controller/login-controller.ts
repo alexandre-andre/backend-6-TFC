@@ -12,10 +12,12 @@ export default class LoginController {
     this._loginServices = new LoginServices(); // é uma instância dessa classe
   }
   
-  public async postLogin(req: Request, res: Response): Promise<void> {
+  public async postLogin(req: Request, res: Response) {
+    console.log('CONTROLLER postLogin: ', req.body);
+    
     const token = await this._loginServices.postLogin(req.body);
     
-    res.status(StatusCodes.OK).json({ token });
+    return res.status(StatusCodes.OK).json({ token });
   }
 };
 

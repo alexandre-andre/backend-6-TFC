@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { StatusCodes } from 'http-status-codes';
 console.log('MIDDLEWARE >>>>>>>>>>>>>>>>>>');
 
 import {
@@ -10,7 +11,6 @@ import {
   isEmailRegexValidation,
 } from '../utils';
 import ILogin from '../interface';
-import { StatusCodes } from 'http-status-codes';
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
