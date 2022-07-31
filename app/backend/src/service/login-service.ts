@@ -14,8 +14,7 @@ import {
 export default class LoginServices {
   private getUserByEmail = async (email: string) => {
     const user = await User.findOne({ where: { email } });
-    console.log(user);
-    
+
     if (!user) {
       throw new HttpException(StatusCodes.NOT_FOUND, STATUS_MESSAGE(stringUser).notFound);
     }
