@@ -13,6 +13,7 @@ function STATUS_MESSAGE(string?: any, num?: number) {
     notFound: `${initialString(string)} not found.`,
     lesserThan: `${initialString(string)} lesser than ${num} characteres`,
     invalid: `Invalid ${string}`,
+    incorrect: 'Incorrect email or password',
   };
 }
 

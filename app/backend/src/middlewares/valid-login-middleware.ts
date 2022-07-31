@@ -16,7 +16,7 @@ function isValidEmail(email: string) {
   }
 
   if (!isEmailRegexValidation.test(email)) {
-    throw new HttpException(StatusCodes.UNAUTHORIZED, STATUS_MESSAGE(stringEmail).invalid);
+    throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
   }
 
   return true;
