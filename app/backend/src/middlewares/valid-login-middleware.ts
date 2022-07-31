@@ -12,7 +12,7 @@ import ILogin from '../interface';
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
-    throw new HttpException(StatusCodes.NOT_FOUND, STATUS_MESSAGE(stringEmail).notFound);
+    throw new HttpException(StatusCodes.NOT_FOUND, 'All fields must be filled');
   }
 
   if (!isEmailRegexValidation.test(email)) {

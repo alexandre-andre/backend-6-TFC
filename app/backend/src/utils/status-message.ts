@@ -9,6 +9,7 @@ function initialString(string: string) {
 
 function STATUS_MESSAGE(string?: any, num?: number) {
   return {
+    notFields: 'All fields must be filled',
     notFound: `${initialString(string)} not found.`,
     lesserThan: `${initialString(string)} lesser than ${num} characteres`,
     invalid: `Invalid ${string}`,
