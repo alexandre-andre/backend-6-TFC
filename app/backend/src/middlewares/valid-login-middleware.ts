@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-console.log('MIDDLEWARE >>>>>>>>>>>>>>>>>>');
-
 import {
   STATUS_MESSAGE,
   HttpException,
@@ -30,14 +28,17 @@ function isValidPassword(password: string) {
   }
 
   if (password.length < MIN_LENGTH_PASSWORD) {
-    throw new HttpException(StatusCodes.UNAUTHORIZED, STATUS_MESSAGE(stringPassword, MIN_LENGTH_PASSWORD).lesserThan);
+    throw new HttpException(
+      StatusCodes.UNAUTHORIZED,
+      STATUS_MESSAGE(stringPassword, MIN_LENGTH_PASSWORD).lesserThan,
+    );
   }
 
   return true;
 }
 
-function isValidLogin(req: Request, _res: Response, next: NextFunction) {
-  const { email, password }: ILogin = req.body;
+function isValidLogin(req: Request<ILogin>, _res: Response, next: NextFunction) {
+  const { email, password } = req.body;
 
   isValidEmail(email);
   isValidPassword(password);
@@ -46,5 +47,3 @@ function isValidLogin(req: Request, _res: Response, next: NextFunction) {
 }
 
 export default isValidLogin;
-
-console.log('<<<<<<<<<<<<< MIDDLEWARE');

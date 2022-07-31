@@ -19,7 +19,7 @@ User.init(
     },
     username: { allowNull: false, type: STRING(30) },
     role: { allowNull: false, type: STRING(30) },
-    email: { allowNull: false, type: STRING(30) },
+    email: { unique: true, allowNull: false, type: STRING(30) },
     password: { type: STRING(30) },
   },
   {

@@ -1,24 +1,19 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-console.log('CONTROLLER >>>>>>>>>>>');
-
-import LoginServices from '../service/login-servive';
-
+import ILogin from '../interface';
+import LoginServices from '../service/login-service';
 
 export default class LoginController {
   private _loginServices: LoginServices; // é privado da classe LoginController
-  
+
   constructor() {
-    this._loginServices = new LoginServices(); // é uma instância dessa classe
+    this._loginServices = new LoginServices(); // é uma instância dessa classe LoginService na LoginController
   }
-  
-  public async postLogin(req: Request, res: Response) {
+
+  public async postLogin(req: Request<ILogin>, res: Response) {
     console.log('CONTROLLER postLogin: ', req.body);
-    
     const token = await this._loginServices.postLogin(req.body);
-    
+
     return res.status(StatusCodes.OK).json({ token });
   }
-};
-
-console.log('<<<<<<<<<<<< CONTROLLER ');
+}

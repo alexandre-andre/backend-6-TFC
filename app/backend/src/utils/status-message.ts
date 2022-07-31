@@ -2,10 +2,15 @@
 //   return string.charAt(0).toUpperCase();
 // }
 
-function STATUS_MESSAGE(string?: string, num?: number) {
+function initialString(string: string) {
+  const result = string.replace(/(^\w{1})|(\s+\w{1})/g, (firstLetter) => firstLetter.toUpperCase());
+  return result;
+}
+
+function STATUS_MESSAGE(string?: any, num?: number) {
   return {
-    notFound: `Not found ${string} field or value.`,
-    lesserThan: `${string?.charAt(0).toUpperCase()} lesser than ${num} characteres`,
+    notFound: `${initialString(string)} not found.`,
+    lesserThan: `${initialString(string)} lesser than ${num} characteres`,
     invalid: `Invalid ${string}`,
   };
 }

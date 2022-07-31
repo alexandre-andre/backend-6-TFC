@@ -13,7 +13,7 @@ const configToken: jwt.SignOptions = {
   algorithm: 'HS256',
 };
 
-function generateTokenJWT(payload: Omit<IUser, 'id' & 'password'>) {
+function generateTokenJWT(payload: IUser) {
   return jwt.sign(
     payload,
     secret,
