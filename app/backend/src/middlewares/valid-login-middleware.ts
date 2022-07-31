@@ -12,7 +12,7 @@ import ILogin from '../interface';
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
-    throw new HttpException(StatusCodes.NOT_FOUND, 'All fields must be filled');
+    throw new HttpException(StatusCodes.BAD_REQUEST, 'All fields must be filled');
   }
 
   if (!isEmailRegexValidation.test(email)) {
@@ -24,7 +24,7 @@ function isValidEmail(email: string) {
 
 function isValidPassword(password: string) {
   if (!password || password === undefined) {
-    throw new HttpException(StatusCodes.NOT_FOUND, STATUS_MESSAGE(stringPassword).notFound);
+    throw new HttpException(StatusCodes.BAD_REQUEST, 'All fields must be filled');
   }
 
   if (password.length < MIN_LENGTH_PASSWORD) {
