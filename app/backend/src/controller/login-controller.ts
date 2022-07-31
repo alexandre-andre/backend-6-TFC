@@ -11,7 +11,6 @@ export default class LoginController {
   }
 
   public async postLogin(req: Request<ILogin>, res: Response) {
-    console.log('CONTROLLER postLogin: ', req.body);
     const token = await this._loginServices.postLogin(req.body);
 
     return res.status(StatusCodes.OK).json({ token });

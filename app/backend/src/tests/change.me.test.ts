@@ -2,44 +2,49 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
-
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
-import { Response } from 'superagent';
+// import { Response } from 'superagent';
+import User from '../database/models/user';
+import { ok } from 'assert';
+// import { response } from 'express';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+const url = 'http://localhost:3001';
 
-  // let chaiHttpResponse: Response;
-
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+describe('Meus Testes', () => {
+  describe('02 - Testa "Login"', () => {
+    before(async () => {
+      sinon // sinon.stub(); Cria uma sub função anônima
+        .stub(User, 'findOne') // (objeto, 'método')
+        .resolves({ // mock do retorno do método
+          username: 'Admin',
+          role: 'admin',
+          email: 'admin@admin.com',
+          password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+        } as User);
+    });
+  
+    after(()=>{
+      (User.findOne as sinon.SinonStub).restore(); // restaura o sinon após o teste 
+    })
+  
+    it('verifica caso de retorno esperado', async () => {  
+      await chai 
+        .request(url) // requisição chamando a classe de rotas
+        .post('/login') // executa o método POST e chama a rota /login
+        .set('content-type', 'application/json') // define um setter
+        .send({ email: 'admin@admin.com', password: 'secret_admin' }) // envia um requisição x
+        .then((response) => {          
+          expect(response.ok).to.equal(true);
+          expect(response.body).to.haveOwnProperty('token');
+        })
+    });
+  
+    // it('Seu sub-teste', () => {
+    //   expect(false).to.be.eq(true);
+    // });
   });
-});
+})
