@@ -14,7 +14,7 @@ const { expect } = chai;
 const url = 'http://localhost:3001';
 
 describe('TESTES EM LOGIN', () => {
-  describe('verifica controller', () => {
+  describe('/login', () => {
     beforeEach(async () => {
       sinon // sinon.stub(); Cria uma sub função anônima
         .stub(User, 'findOne') // (objeto, 'método')
@@ -43,7 +43,7 @@ describe('TESTES EM LOGIN', () => {
     });
   });
 
-    describe('02 - Testa "Login"', () => {
+    describe('/login', () => {
       beforeEach(async () => {
         sinon // sinon.stub(); Cria uma sub função anônima
           .stub(service.prototype, 'postLogin') // (objeto, 'método')
@@ -56,7 +56,7 @@ describe('TESTES EM LOGIN', () => {
         (service.prototype.postLogin as sinon.SinonStub).restore(); // restaura o sinon após o teste 
       })
     
-    it('verifica caso de retorno esperado', async () => {  
+    it('verifica caso de retorno de token', async () => {  
       await service.prototype
         .postLogin({ email: 'admin@admin.com', password: 'secret_admin' })
         .then((response) => {
@@ -64,4 +64,29 @@ describe('TESTES EM LOGIN', () => {
         });
     });
   });
+
+  // describe('/login', () => {
+  //   beforeEach(async () => {
+  //     sinon // sinon.stub(); Cria uma sub função anônima
+  //       .stub(User, 'findOne') // (objeto, 'método')
+  //       .resolves();
+  //   });
+  
+  //   afterEach(()=>{
+  //     (User.findOne as sinon.SinonStub).restore(); // restaura o sinon após o teste 
+  //   })
+  
+  //   it('verifica caso de retorno esperado', async () => {  
+  //     await chai 
+  //       .request(url) // requisição chamando a classe de rotas
+  //       .post('/login') // executa o método POST e chama a rota /login
+  //       .set('content-type', 'application/json') // define um setter
+  //       .send({ password: 'secret_admin' }) // envia um requisição x
+  //       .then((response) => {
+  //         expect(response.badRequest).to.equal(true);
+  //         expect(response.body).to.haveOwnProperty('message');
+  //         expect(response.body.message).to.equal('All fields must be filled');
+  //       })
+  //   });
+  // });
 })
