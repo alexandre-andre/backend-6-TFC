@@ -12,7 +12,7 @@ import {
 } from '../utils';
 
 export default class LoginServices {
-  private getUserByEmail = async (email: string) => {
+  public getUserByEmail = async (email: string) => {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {

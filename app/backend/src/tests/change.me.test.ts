@@ -5,18 +5,17 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 // import { Response } from 'superagent';
 import User from '../database/models/user';
-import { ok } from 'assert';
 // import { response } from 'express';
-
+import service from '../service/login-service'
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
 const url = 'http://localhost:3001';
 
-describe('Meus Testes', () => {
-  describe('02 - Testa "Login"', () => {
-    before(async () => {
+describe('TESTES EM LOGIN', () => {
+  describe('verifica controller', () => {
+    beforeEach(async () => {
       sinon // sinon.stub(); Cria uma sub função anônima
         .stub(User, 'findOne') // (objeto, 'método')
         .resolves({ // mock do retorno do método
@@ -27,7 +26,7 @@ describe('Meus Testes', () => {
         } as User);
     });
   
-    after(()=>{
+    afterEach(()=>{
       (User.findOne as sinon.SinonStub).restore(); // restaura o sinon após o teste 
     })
   
@@ -37,14 +36,32 @@ describe('Meus Testes', () => {
         .post('/login') // executa o método POST e chama a rota /login
         .set('content-type', 'application/json') // define um setter
         .send({ email: 'admin@admin.com', password: 'secret_admin' }) // envia um requisição x
-        .then((response) => {          
+        .then((response) => {
           expect(response.ok).to.equal(true);
           expect(response.body).to.haveOwnProperty('token');
         })
     });
-  
-    // it('Seu sub-teste', () => {
-    //   expect(false).to.be.eq(true);
-    // });
+  });
+
+    describe('02 - Testa "Login"', () => {
+      beforeEach(async () => {
+        sinon // sinon.stub(); Cria uma sub função anônima
+          .stub(service.prototype, 'postLogin') // (objeto, 'método')
+          .resolves( // mock do retorno do método
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2NTkyODU0MjEsImV4cCI6MTY1OTI5MjYyMX0.7aE7nx0O9z6p4YfQX7jRD4AyJBMLLj1KLPS03hneQcE'
+          );
+      });
+    
+      afterEach(()=>{
+        (service.prototype.postLogin as sinon.SinonStub).restore(); // restaura o sinon após o teste 
+      })
+    
+    it('verifica caso de retorno esperado', async () => {  
+      await service.prototype
+        .postLogin({ email: 'admin@admin.com', password: 'secret_admin' })
+        .then((response) => {
+          expect(response).to.be.a('string')
+        });
+    });
   });
 })
