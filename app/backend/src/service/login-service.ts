@@ -8,7 +8,6 @@ import {
   HttpException,
   generateTokenJWT,
   stringUser,
-  stringPassword,
 } from '../utils';
 
 export default class LoginServices {
@@ -25,7 +24,7 @@ export default class LoginServices {
   private comparePassword = async (password: string, userPassword: string) => {
     const compare = await bycriptjs.compare(password, userPassword);
     if (!compare) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, STATUS_MESSAGE(stringPassword).invalid);
+      throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
     }
 
     return true;
