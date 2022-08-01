@@ -6,7 +6,8 @@ const teamsRouters = Router();
 
 const teamsController = new TeamsController();
 
-teamsRouters.get('/',
+teamsRouters.get(
+  '/',
   (req: Request, res: Response) => teamsController.getAllTeams(req, res),
 );
 
