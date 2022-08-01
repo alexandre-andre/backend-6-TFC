@@ -53,7 +53,7 @@ export default class LoginServices {
     return token;
   }
 
-  public tokenAuthenticate(token: string, res: any) {
+  public tokenAuthenticate = (token: string, res: any) => {
     const user: any = isAuthenticatedToken(token);
 
     if (!user) {
@@ -61,7 +61,7 @@ export default class LoginServices {
     }
 
     res.locals.user = user;
-  
+
     return { role: user.role };
-  }
+  };
 }
