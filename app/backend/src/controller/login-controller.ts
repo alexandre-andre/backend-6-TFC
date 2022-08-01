@@ -15,4 +15,10 @@ export default class LoginController {
 
     return res.status(StatusCodes.OK).json({ token });
   }
+
+  public tokenAuthenticate(req: Request, res: Response) {
+    const user = this._loginServices.tokenAuthenticate(req.headers.authorization || '', res);
+    
+    return res.status(StatusCodes.OK).json(user);
+  }
 }

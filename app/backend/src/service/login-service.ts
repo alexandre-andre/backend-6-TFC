@@ -8,6 +8,7 @@ import {
   HttpException,
   generateTokenJWT,
   stringUser,
+  isAuthenticatedToken,
 } from '../utils';
 
 export default class LoginServices {
@@ -50,5 +51,17 @@ export default class LoginServices {
     const token = generateTokenJWT(userToPayload);
 
     return token;
+  }
+
+  public tokenAuthenticate(token: string, res: any) {
+    const user: any = isAuthenticatedToken(token);
+
+    if (!user) {
+      throw new HttpException(StatusCodes.UNAUTHORIZED, 'Unauthorized token');
+    }
+
+    res.locals.user = user;
+  
+    return { role: user.role };
   }
 }
