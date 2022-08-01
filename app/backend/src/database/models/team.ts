@@ -20,7 +20,7 @@ Team.init(
     sequelize: db,
     modelName: 'team', // refere-se ao model
     tableName: 'teams', // refere-se a migration
-    // underscored: true,
+    underscored: true,
     timestamps: false,
   },
 );
