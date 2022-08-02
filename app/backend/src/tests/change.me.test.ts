@@ -6,9 +6,15 @@ import { app } from '../app';
 // import { Response } from 'superagent';
 import User from '../database/models/user';
 import Team from '../database/models/team';
+import Match from '../database/models/match';
 // import { response } from 'express';
 import service from '../service/login-service'
 import TeamsService from '../service/teams-service';
+import MatchService from '../service/matches-service';
+import MatchesController from '../controller/matches-controller';
+
+import mockAllMatches from './mocks/matches';
+
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -17,6 +23,8 @@ const url = 'http://localhost:3001';
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2NTkzNjE5NDYsImV4cCI6MTY1OTM2OTE0Nn0.T8LDlmYlLQ_6N9ZCapm7s7JSdSm_T-zdsXDbIF9lg9s';
 
 const teamsService = new TeamsService();
+const matchesService = new MatchService();
+const matchesController = new MatchesController();
 
 describe('TESTES EM LOGIN', () => {
   describe('/login', () => {
@@ -282,4 +290,35 @@ describe('Testes em Teams', () => {
       })
     });
   });
+});
+
+describe('Testa Matches', () => {
+
+  describe('/matches', () => {
+      it('retorna um array com todas as partidas', async () => {
+      await chai.request(url)
+      .get('/matches')
+      .then((response) => {
+          expect(response.ok).to.be.true;
+          expect(response.body).to.deep.equals(mockAllMatches)
+      });
+    });
+  });
+
+  describe('matches service, se a função "getAllMatches" retorna um array com as partidas', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'findAll')
+        .resolves(mockAllMatches as any);
+    });
+
+    afterEach(() => (Match.findAll as sinon.SinonStub).restore());
+
+    it('retorna um array de objetos', async () => {
+      await matchesService.getAllMatches()
+        .then((response) => {
+          expect(response).to.deep.equals(mockAllMatches)
+      });
+    });
+  });
+
 });
