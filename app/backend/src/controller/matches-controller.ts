@@ -10,10 +10,18 @@ class MatchesController {
     this._matchesServices = new MatchesService();
   }
 
-  public async getAllMatches(_req: Request, res: Response) {
+  public async getAllMatches(request: Request, response: Response) {
+    if (request.query.inProgress) {
+      const { inProgress }: any = request.query;
+
+      const result = await this._matchesServices.getMatchesInProgress(inProgress);
+
+      return response.status(StatusCodes.OK).json(result);
+    }
+
     const allMatches = await this._matchesServices.getAllMatches();
 
-    return res.status(StatusCodes.OK).json(allMatches);
+    return response.status(StatusCodes.OK).json(allMatches);
   }
 }
 

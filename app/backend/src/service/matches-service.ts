@@ -22,6 +22,16 @@ class MatchesService {
 
     return allMatches;
   };
+
+  public getMatchesInProgress = async (inProgress: string) => {
+    const allMatches = await this.getAllMatches();
+
+    const matchesInProgress = allMatches.filter(
+      (match) => JSON.stringify(match.inProgress) === inProgress,
+    );
+
+    return matchesInProgress;
+  };
 }
 
 export default MatchesService;
