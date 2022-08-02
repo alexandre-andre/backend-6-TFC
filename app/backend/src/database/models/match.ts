@@ -29,15 +29,15 @@ Match.init(
     sequelize: db,
     modelName: 'match', // refere-se ao model
     tableName: 'matches', // refere-se a migration
-    // underscored: true,
+    underscored: true,
     timestamps: false,
   },
 );
 
-Team.hasMany(Match, { foreignKey: 'id', as: 'matches' });
-Match.belongsTo(Team, { foreignKey: 'id', as: 'team' });
+// Team.hasMany(Match, { foreignKey: 'id', as: 'teamHome' });
+Match.belongsTo(Team, { foreignKey: 'home_team', as: 'teamHome' });
 
-Team.hasMany(Match, { foreignKey: 'id', as: 'matches' });
-Match.belongsTo(Team, { foreignKey: 'id', as: 'team' });
+// Team.hasMany(Match, { foreignKey: 'id', as: 'teamAway' });
+Match.belongsTo(Team, { foreignKey: 'away_team', as: 'teamAway' });
 
 export default Match;
