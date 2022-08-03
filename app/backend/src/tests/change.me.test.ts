@@ -8,7 +8,7 @@ import User from '../database/models/user';
 import Team from '../database/models/team';
 import Match from '../database/models/match';
 // import { response } from 'express';
-import service from '../service/login-service'
+import LoginService from '../service/login-service'
 import TeamsService from '../service/teams-service';
 import MatchService from '../service/matches-service';
 import MatchesController from '../controller/matches-controller';
@@ -16,6 +16,7 @@ import MatchesController from '../controller/matches-controller';
 import mockAllMatches from './mocks/matches';
 import { mockMatchesInProgress } from './mocks/matchesInProgress';
 import { mockMatchesFinisheds } from './mocks/machesFinisheds';
+import { response } from 'express';
 
 chai.use(chaiHttp);
 
@@ -24,6 +25,7 @@ const { expect } = chai;
 const url = 'http://localhost:3001';
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2NTkzNjE5NDYsImV4cCI6MTY1OTM2OTE0Nn0.T8LDlmYlLQ_6N9ZCapm7s7JSdSm_T-zdsXDbIF9lg9s';
 
+const loginService = new LoginService();
 const teamsService = new TeamsService();
 const matchesService = new MatchService();
 const matchesController = new MatchesController();
@@ -61,18 +63,18 @@ describe('TESTES EM LOGIN', () => {
   describe('/login', () => {
     beforeEach(async () => {
       sinon // sinon.stub(); Cria uma sub função anônima
-        .stub(service.prototype, 'postLogin') // (objeto, 'método')
+        .stub(loginService, 'postLogin') // (objeto, 'método')
         .resolves( // mock do retorno do método
           token
         );
     });
   
     afterEach(()=>{
-      (service.prototype.postLogin as sinon.SinonStub).restore(); // restaura o sinon após o teste 
+      (loginService.postLogin as sinon.SinonStub).restore(); // restaura o sinon após o teste 
     })
     
     it('verifica caso de retorno de token', async () => {  
-      await service.prototype
+      await loginService
         .postLogin({ email: 'admin@admin.com', password: 'secret_admin' })
         .then((response) => {
           expect(response).to.be.a('string')
@@ -149,6 +151,20 @@ describe('TESTES EM LOGIN', () => {
   //       })
   //   });
   // });
+
+  describe('testa função "tokenAuthenticate"', () => {
+    beforeEach(() => {
+      sinon
+        .stub(loginService, 'tokenAuthenticate')
+        .resolves({ role: 'admin' } as any);
+    });
+
+    afterEach(() => (loginService.tokenAuthenticate as sinon.SinonStub).restore());
+    it('verifica caso de retorno esperado', async () => {  
+      const result = await loginService.tokenAuthenticate(token, response)
+        expect(result).to.deep.equals({ role: 'admin' })
+    });
+  });
 })
 
 describe('Testes em Teams', () => {

@@ -12,7 +12,7 @@ import {
 } from '../utils';
 
 export default class LoginServices {
-  private getUserByEmail = async (email: string) => {
+  readonly getUserByEmail = async (email: string) => {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -22,7 +22,7 @@ export default class LoginServices {
     return user;
   };
 
-  private comparePassword = async (password: string, userPassword: string) => {
+  readonly comparePassword = async (password: string, userPassword: string) => {
     const compare = await bycriptjs.compare(password, userPassword);
     if (!compare) {
       throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
@@ -31,7 +31,7 @@ export default class LoginServices {
     return true;
   };
 
-  private fortmatedUserToPayload = async (user: Omit<IUser, 'id' & 'password'>) => (
+  readonly fortmatedUserToPayload = async (user: Omit<IUser, 'id' & 'password'>) => (
     {
       username: user.username,
       role: user.role,
