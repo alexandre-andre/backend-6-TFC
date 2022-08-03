@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import ILogin from '../interface';
+import { ILogin } from '../interface';
 
 import LoginController from '../controller/login-controller';
 import middleware from '../middlewares';

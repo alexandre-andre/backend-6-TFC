@@ -23,6 +23,12 @@ class MatchesController {
 
     return response.status(StatusCodes.OK).json(allMatches);
   }
+
+  public async postMatch(request: Request, response: Response) {
+    const match = await this._matchesServices.postMatch(request.body);
+
+    return response.status(StatusCodes.OK).json(match);
+  }
 }
 
 export default MatchesController;

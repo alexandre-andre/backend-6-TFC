@@ -1,3 +1,4 @@
+import { IMatchRequest } from '../interface';
 import Match from '../database/models/match';
 import Team from '../database/models/team';
 
@@ -31,6 +32,22 @@ class MatchesService {
     );
 
     return matchesInProgress;
+  };
+
+  public postMatch = async (reqBody: IMatchRequest) => {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = reqBody;
+
+    const currentMatch = await Match.create(
+      {
+        homeTeam,
+        homeTeamGoals,
+        awayTeam,
+        awayTeamGoals,
+        inProgress: true,
+      },
+    );
+
+    return currentMatch;
   };
 }
 

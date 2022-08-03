@@ -2,7 +2,7 @@ import * as bycriptjs from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
 import User from '../database/models/user';
 import { IUser } from '../database/models/interface';
-import ILogin from '../interface';
+import { ILogin } from '../interface';
 import {
   STATUS_MESSAGE,
   HttpException,

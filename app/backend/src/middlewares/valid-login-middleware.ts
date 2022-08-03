@@ -7,7 +7,7 @@ import {
   MIN_LENGTH_PASSWORD,
   isEmailRegexValidation,
 } from '../utils';
-import ILogin from '../interface';
+import { ILogin } from '../interface';
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
