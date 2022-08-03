@@ -14,6 +14,8 @@ import MatchService from '../service/matches-service';
 import MatchesController from '../controller/matches-controller';
 
 import mockAllMatches from './mocks/matches';
+import { mockMatchesInProgress } from './mocks/matchesInProgress';
+import { mockMatchesFinisheds } from './mocks/machesFinisheds';
 
 chai.use(chaiHttp);
 
@@ -292,7 +294,7 @@ describe('Testes em Teams', () => {
   });
 });
 
-describe('Testa Matches', () => {
+describe('Testa MatchesServices', () => {
 
   describe('/matches', () => {
       it('retorna um array com todas as partidas', async () => {
@@ -321,4 +323,36 @@ describe('Testa Matches', () => {
     });
   });
 
+  describe('matche service, se a função "getMatchesInProgress" quando recebe "true"', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'findAll')
+        .resolves(mockMatchesInProgress as any);
+    });
+
+    afterEach(() => (Match.findAll as sinon.SinonStub).restore());
+
+    it('retorna um array somente com as partidas ainda em andamento', async () => {
+      await matchesService.getMatchesInProgress('true')
+        .then((response) => {
+          expect(response).to.deep.equal(mockMatchesInProgress);
+        });
+    })
+  });
+
+  describe('matche service, se a função "getMatchesInProgress" quando recebe "false"', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'findAll')
+        .resolves(mockMatchesFinisheds as any);
+    });
+
+    afterEach(() => (Match.findAll as sinon.SinonStub).restore());
+
+    it('retorna um array somente com as partidas ainda em andamento', async () => {
+      await matchesService.getMatchesInProgress('false')
+        .then((response) => {
+          expect(response).to.deep.equal(mockMatchesFinisheds);
+        });
+    })
+  });
 });
+
