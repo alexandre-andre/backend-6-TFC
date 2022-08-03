@@ -29,6 +29,12 @@ class MatchesController {
 
     return response.status(StatusCodes.OK).json(match);
   }
+
+  public async finishMatch(request: Request, response: Response) {
+    const finished = await this._matchesServices.finishMatch(request.params.id);
+
+    return response.status(StatusCodes.OK).json(finished);
+  }
 }
 
 export default MatchesController;

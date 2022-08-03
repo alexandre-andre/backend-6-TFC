@@ -1,4 +1,6 @@
+import { StatusCodes } from 'http-status-codes';
 import { IMatchRequest } from '../interface';
+import { HttpException } from '../utils';
 import Match from '../database/models/match';
 import Team from '../database/models/team';
 
@@ -48,6 +50,21 @@ class MatchesService {
     );
 
     return currentMatch;
+  };
+
+  public finishMatch = async (id: string) => {
+    const finishedMatch = await Match.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+
+    console.log(await Match.findByPk(id));
+
+    if (!finishedMatch.length) {
+      throw new HttpException(StatusCodes.NOT_FOUND, 'Match not found');
+    }
+
+    return { message: 'Finished' };
   };
 }
 
