@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 // https://dev.to/francis04j/how-to-add-env-and-use-process-env-to-your-typescript-project-3d6b
 import * as dotenv from 'dotenv';
 import { IUser } from '../database/models/interface';
-import { stringToken, EStatusMessage, HttpException } from '.';
+import { EStatusMessage, HttpException } from '.';
 
 dotenv.config();
 

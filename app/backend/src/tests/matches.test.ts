@@ -18,9 +18,16 @@ const url = 'http://localhost:3001';
 
 const matchesService = new MatchService();
 
-describe('Testa MatchesServices', () => {
+describe('Testes em Matches', () => {
 
   describe('/matches', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'findAll')
+        .resolves(mockAllMatches as any);
+    });
+
+    afterEach(() => (Match.findAll as sinon.SinonStub).restore());
+
       it('retorna um array com todas as partidas', async () => {
       await chai.request(url)
       .get('/matches')
@@ -32,6 +39,13 @@ describe('Testa MatchesServices', () => {
   });
 
   describe('/matches?inProgress=true', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'findAll')
+        .resolves(mockMatchesInProgress as any);
+    });
+
+    afterEach(() => (Match.findAll as sinon.SinonStub).restore());
+
     it('retorna um array com todas as partidas', async () => {
       await chai.request(url)
       .get('/matches?inProgress=true')
@@ -43,6 +57,13 @@ describe('Testa MatchesServices', () => {
   });
 
   describe('/matches?inProgress=false', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'findAll')
+        .resolves(mockMatchesFinisheds as any);
+    });
+
+    afterEach(() => (Match.findAll as sinon.SinonStub).restore());
+    
     it('retorna um array com todas as partidas', async () => {
       await chai.request(url)
       .get('/matches?inProgress=false')
@@ -97,8 +118,80 @@ describe('Testa MatchesServices', () => {
       await matchesService.getMatchesInProgress('false')
         .then((response) => {
           expect(response).to.deep.equal(mockMatchesFinisheds);
-        });
+      });
     })
   });
+
+  describe('se a função "postMatch"', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'create')
+        .resolves({
+          'id': '49',
+          'homeTeam': '16',
+          'homeTeamGoals': '2',
+          'awayTeam': '8',
+          'awayTeamGoals': '2',
+          'inProgress': true
+      } as any);
+    });
+
+    afterEach(() => {
+      (Match.create as sinon.SinonStub).restore();
+    });
+
+    it('retorna uma partida criada', async () => {
+      await matchesService.postMatch({
+        'homeTeam': '16',
+        'awayTeam': '8',
+        'homeTeamGoals': '2',
+        'awayTeamGoals': '2'
+      })
+        .then((response) => {
+          expect(response).to.deep.equal({
+            'id': '49',
+            'homeTeam': '16',
+            'homeTeamGoals': '2',
+            'awayTeam': '8',
+            'awayTeamGoals': '2',
+            'inProgress': true
+        });
+        })
+    });
+  });
+
+  describe('se a função "finishMatch"', () => {
+    beforeEach(async () => {
+      sinon.stub(Match, 'update').resolves([1] as any);
+    });
+
+    afterEach(() => {
+      (Match.update as sinon.SinonStub).restore();
+    });
+
+    it('retorna a mensagem "Finished" quando a partida for finalizada', async () => {
+      await matchesService.finishMatch('49')
+        .then((response) => {
+          expect(response).to.deep.equal({ 'message': 'Finished' });
+        })
+    });
+  });
+
+  // describe('se a função "finishMatch"', () => {
+  //   beforeEach(async () => {
+  //     sinon.stub(Match, 'update').resolves([] as any);
+  //   });
+
+  //   afterEach(() => {
+  //     (Match.update as sinon.SinonStub).restore();
+  //   });
+
+  //   it('lança uma exceção quando a partida não existe', async () => {
+  //     await matchesService
+  //       .finishMatch('999')
+  //       .then((response) => {
+  //         expect(response.message).to.be.equal('Match not found');
+  //     });
+  //   });
+  // });
 });
 

@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import {
   EStatusMessage,
   HttpException,
-  stringPassword,
   MIN_LENGTH_PASSWORD,
   isEmailRegexValidation,
 } from '../utils';

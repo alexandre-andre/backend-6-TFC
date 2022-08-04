@@ -58,9 +58,7 @@ class MatchesService {
       { where: { id } },
     );
 
-    console.log(await Match.findByPk(id));
-
-    if (!finishedMatch.length) {
+    if (JSON.stringify(finishedMatch) === '[]') {
       throw new HttpException(StatusCodes.NOT_FOUND, 'Match not found');
     }
 
