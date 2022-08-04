@@ -1,20 +1,8 @@
-// function captilize(string: string): string {
-//   return string.charAt(0).toUpperCase();
-// }
-
-function initialString(string: string) {
-  const result = string.replace(/(^\w{1})|(\s+\w{1})/g, (firstLetter) => firstLetter.toUpperCase());
-  return result;
+enum EStatusMessage {
+  notFields = 'All fields must be filled',
+  incorrect = 'Incorrect email or password',
+  unauthorized = 'Unauthorized token',
+  notLength = 'Password lenght not allowed'
 }
 
-function STATUS_MESSAGE(string?: any, num?: number) {
-  return {
-    notFields: 'All fields must be filled',
-    notFound: `${initialString(string)} not found.`,
-    lesserThan: `${initialString(string)} lesser than ${num} characteres`,
-    invalid: `Invalid ${string}`,
-    incorrect: 'Incorrect email or password',
-  };
-}
-
-export default STATUS_MESSAGE;
+export default EStatusMessage;

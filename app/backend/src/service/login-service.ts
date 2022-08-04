@@ -4,10 +4,9 @@ import User from '../database/models/user';
 import { IUser } from '../database/models/interface';
 import { ILogin } from '../interface';
 import {
-  STATUS_MESSAGE,
+  EStatusMessage,
   HttpException,
   generateTokenJWT,
-  stringUser,
   isAuthenticatedToken,
 } from '../utils';
 
@@ -16,7 +15,7 @@ export default class LoginServices {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      throw new HttpException(StatusCodes.NOT_FOUND, STATUS_MESSAGE(stringUser).notFound);
+      throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.incorrect);
     }
 
     return user;
@@ -25,7 +24,7 @@ export default class LoginServices {
   readonly comparePassword = async (password: string, userPassword: string) => {
     const compare = await bycriptjs.compare(password, userPassword);
     if (!compare) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
+      throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.incorrect);
     }
 
     return true;
@@ -57,7 +56,7 @@ export default class LoginServices {
     const user: any = isAuthenticatedToken(token);
 
     if (!user) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, 'Unauthorized token');
+      throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.unauthorized);
     }
 
     res.locals.user = user;

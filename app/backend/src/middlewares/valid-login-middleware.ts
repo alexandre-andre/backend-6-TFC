@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import {
-  STATUS_MESSAGE,
+  EStatusMessage,
   HttpException,
   stringPassword,
   MIN_LENGTH_PASSWORD,
@@ -11,11 +11,11 @@ import { ILogin } from '../interface';
 
 function isValidEmail(email: string) {
   if (!email || email === undefined) {
-    throw new HttpException(StatusCodes.BAD_REQUEST, 'All fields must be filled');
+    throw new HttpException(StatusCodes.BAD_REQUEST, EStatusMessage.notFields);
   }
 
   if (!isEmailRegexValidation.test(email)) {
-    throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
+    throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.incorrect);
   }
 
   return true;
@@ -23,13 +23,13 @@ function isValidEmail(email: string) {
 
 function isValidPassword(password: string) {
   if (!password || password === undefined) {
-    throw new HttpException(StatusCodes.BAD_REQUEST, 'All fields must be filled');
+    throw new HttpException(StatusCodes.BAD_REQUEST, EStatusMessage.notFields);
   }
 
   if (password.length < MIN_LENGTH_PASSWORD) {
     throw new HttpException(
       StatusCodes.UNAUTHORIZED,
-      STATUS_MESSAGE(stringPassword, MIN_LENGTH_PASSWORD).lesserThan,
+      EStatusMessage.notLength,
     );
   }
 
