@@ -1,11 +1,14 @@
 import { Request, Response, Router } from 'express';
 
 import MatchesController from '../controller/matches-controller';
+// import TeamsController from '../controller/teams-controller';
+
 import mid from '../middlewares';
 
 const matchesRouters = Router();
 
 const matchesController = new MatchesController();
+// const teamsController = new TeamsController();
 
 matchesRouters.get(
   '/',
@@ -16,6 +19,7 @@ matchesRouters.post(
   '/',
   mid.tokenAuthentication,
   (req: Request, res: Response) => {
+    // teamsController.getTeamById(req, res);
     matchesController.postMatch(req, res);
   },
 );

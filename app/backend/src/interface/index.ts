@@ -4,10 +4,10 @@ interface ILogin {
 }
 
 interface IMatchRequest {
-  homeTeam: string,
-  awayTeam: string,
-  homeTeamGoals: string,
-  awayTeamGoals: string
+  homeTeam: number,
+  awayTeam: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number
 }
 
 export { ILogin, IMatchRequest };

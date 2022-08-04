@@ -11,13 +11,27 @@ class TeamsServices {
 
   public getTeamById = async (id: number) => {
     const team = await Team.findByPk(id);
-
-    if (!team) {
-      throw new HttpException(StatusCodes.NOT_FOUND, 'This team was not found');
+    console.log('getTeamById > ', team);
+    
+    if (team === null) {
+      throw new HttpException(StatusCodes.NOT_FOUND, 'There is no team with such id!');
     }
 
     return team;
   };
+
+  // public countTeams = async (idHomeTeam: number, idAwayTeam: number) => {
+  //   const teams = await Team.findAndCountAll({
+  //     where: { id: [idHomeTeam, idAwayTeam] },
+  //   })
+    
+  //   if (teams.count !== 2) {
+  //     return 'There is no team with such id!';
+  //   //  throw new HttpException(StatusCodes.UNAUTHORIZED, 'There is no team with such id!');
+  //   }
+
+  //   return true;
+  // }
 }
 
 export default TeamsServices;
