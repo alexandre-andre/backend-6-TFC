@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-
 import MatchesService from '../service/matches-service';
 
 class MatchesController {
@@ -34,6 +33,13 @@ class MatchesController {
     const finished = await this._matchesServices.finishMatch(request.params.id);
 
     return response.status(StatusCodes.OK).json(finished);
+  }
+
+  public async updateMatchInProgess(request: Request, response: Response) {
+    const result = await this._matchesServices
+      .updateMatchInProgess(request.body, request.params.id);
+
+    return response.status(StatusCodes.OK).json(result);
   }
 }
 

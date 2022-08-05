@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+import { Op } from 'sequelize';
 import { IMatchRequest } from '../interface';
 import { EStatusMessage, HttpException } from '../utils';
 import Match from '../database/models/match';
@@ -86,6 +87,25 @@ class MatchesService {
     );
 
     return { message: 'Finished' };
+  };
+
+  public updateMatchInProgess = async (requestBody: IMatchRequest, matchId: string) => {
+    const { homeTeamGoals, awayTeamGoals } = requestBody;
+
+    const match = await Match.findOne(
+      { where: { [Op.and]: [{ id: matchId }, { inProgress: true }] } },
+    );
+
+    if (!match) {
+      return EStatusMessage.impossibleUpdate;
+      // throw new HttpException(StatusCodes.NOT_FOUND, EStatusMessage.impossibleMatch);
+    }
+
+    match.homeTeamGoals = homeTeamGoals;
+    match.awayTeamGoals = awayTeamGoals;
+    await match.save();
+
+    return `Partida ${matchId} atualizada para: ${match.homeTeamGoals} X ${match.awayTeamGoals}`;
   };
 }
 

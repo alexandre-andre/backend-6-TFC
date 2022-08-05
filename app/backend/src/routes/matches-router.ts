@@ -25,4 +25,11 @@ matchesRouters.patch(
   mid.tokenAuthentication,
   (req: Request, res: Response) => matchesController.finishMatch(req, res),
 );
+
+matchesRouters.patch(
+  '/:id',
+  mid.tokenAuthentication,
+  (req: Request, res: Response) => matchesController.updateMatchInProgess(req, res),
+);
+
 export default matchesRouters;
