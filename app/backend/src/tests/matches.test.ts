@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
-
+import { app } from '../app';
 import Match from '../database/models/match';
 import MatchService from '../service/matches-service';
 
@@ -29,7 +29,7 @@ describe('Testes em Matches', () => {
     afterEach(() => (Match.findAll as sinon.SinonStub).restore());
 
       it('retorna um array com todas as partidas', async () => {
-      await chai.request(url)
+      await chai.request(app)
       .get('/matches')
       .then((response) => {
           expect(response.ok).to.be.true;
@@ -47,7 +47,7 @@ describe('Testes em Matches', () => {
     afterEach(() => (Match.findAll as sinon.SinonStub).restore());
 
     it('retorna um array com todas as partidas', async () => {
-      await chai.request(url)
+      await chai.request(app)
       .get('/matches?inProgress=true')
       .then((response) => {
         expect(response.ok).to.be.true;
@@ -65,7 +65,7 @@ describe('Testes em Matches', () => {
     afterEach(() => (Match.findAll as sinon.SinonStub).restore());
     
     it('retorna um array com todas as partidas', async () => {
-      await chai.request(url)
+      await chai.request(app)
       .get('/matches?inProgress=false')
       .then((response) => {
         expect(response.ok).to.be.true;

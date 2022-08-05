@@ -34,18 +34,18 @@ describe('TESTES EM LOGIN', () => {
   
     afterEach(()=>{
       (User.findOne as sinon.SinonStub).restore(); // restaura o sinon após o teste 
-    })
+    });
   
     it('verifica caso de retorno esperado', async () => {  
-      await chai 
-        .request(url) // requisição chamando a classe de rotas
+      await chai
+        .request(app) // requisição chamando a classe de rotas
         .post('/login') // executa o método POST e chama a rota /login
         .set('content-type', 'application/json') // define um setter
         .send({ email: 'admin@admin.com', password: 'secret_admin' }) // envia um requisição x
         .then((response) => {
           expect(response.ok).to.equal(true);
           expect(response.body).to.haveOwnProperty('token');
-        })
+      });
     });
   });
 

@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
-
+import { app } from '../app';
 import Team from '../database/models/team';
 import TeamsService from '../service/teams-service';
 import { mockAllTeams } from './mocks/allTeams';
@@ -16,7 +16,7 @@ const url = 'http://localhost:3001';
 const teamsService = new TeamsService();
 
 describe('Testes em Teams', () => {
-  describe('', () => {
+  describe('GET /teams', () => {
     beforeEach(async () => {
       sinon.stub(Team, 'findAll').resolves(mockAllTeams as any)
     });
@@ -27,7 +27,7 @@ describe('Testes em Teams', () => {
     
     it('se retorna um array com os times', async () => {
       await chai
-      .request(url)
+      .request(app)
       .get('/teams')
       .then((response) => {
         expect(response.ok).to.be.true;
@@ -45,6 +45,34 @@ describe('Testes em Teams', () => {
           "teamName": "Avaí/Kindermann"
         });
       })
+    });
+  });
+
+  describe('GET /teams/:id', () => {
+    beforeEach(async () => {
+      sinon
+        .stub(Team, 'findByPk')
+        .resolves({
+          "id": 1,
+          "teamName": "Avaí/Kindermann"
+        } as any);
+    });
+    
+    afterEach(() => {
+      (Team.findByPk as sinon.SinonStub).restore();
+    });
+    
+    it('se retorna um array com os times', async () => {
+      await chai
+      .request(app)
+      .get('/teams/1')
+      .then((response) => {
+        expect(response.ok).to.be.true;
+        expect(response.body).to.deep.equal({
+          "id": 1,
+          "teamName": "Avaí/Kindermann"
+        });
+      });
     });
   });
 
