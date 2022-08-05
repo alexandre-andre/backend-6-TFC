@@ -145,7 +145,7 @@ describe('Testes em Matches', () => {
         'awayTeam': '8',
         'homeTeamGoals': '2',
         'awayTeamGoals': '2'
-      })
+      } as any)
         .then((response) => {
           expect(response).to.deep.equal({
             'id': '49',

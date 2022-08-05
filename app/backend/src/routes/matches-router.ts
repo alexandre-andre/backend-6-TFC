@@ -3,9 +3,9 @@ import { Request, Response, Router } from 'express';
 import MatchesController from '../controller/matches-controller';
 
 import mid from '../middlewares';
-import 'express-async-errors';
 
 const matchesRouters = Router();
+import 'express-async-errors';
 
 const matchesController = new MatchesController();
 

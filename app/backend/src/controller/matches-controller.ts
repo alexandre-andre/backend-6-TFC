@@ -15,12 +15,12 @@ class MatchesController {
 
       const result = await this._matchesServices.getMatchesInProgress(inProgress);
 
-      return response.status(StatusCodes.OK).json(result);
+      return response.status(StatusCodes.CREATED).json(result);
     }
 
     const allMatches = await this._matchesServices.getAllMatches();
 
-    return response.status(StatusCodes.OK).json(allMatches);
+    return response.status(StatusCodes.CREATED).json(allMatches);
   }
 
   public async postMatch(request: Request, response: Response) {
