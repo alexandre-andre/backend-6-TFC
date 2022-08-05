@@ -50,7 +50,6 @@ class MatchesService {
     });
 
     if (teams.count !== 2) {
-      // return 'There is no team with such id!';
       throw new HttpException(StatusCodes.UNAUTHORIZED, 'There is no team with such id!');
     }
 
@@ -61,7 +60,6 @@ class MatchesService {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = reqBody;
 
     if (homeTeam === awayTeam) {
-      // return EStatusMessage.impossibleMatch;
       throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.impossibleMatch);
     }
 
@@ -97,8 +95,7 @@ class MatchesService {
     );
 
     if (!match) {
-      return EStatusMessage.impossibleUpdate;
-      // throw new HttpException(StatusCodes.NOT_FOUND, EStatusMessage.impossibleMatch);
+      throw new HttpException(StatusCodes.NOT_FOUND, EStatusMessage.impossibleUpdate);
     }
 
     match.homeTeamGoals = homeTeamGoals;
