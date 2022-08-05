@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import loginRouter from './login-router';
 import matchesRouters from './matches-router';
 import teamsRouters from './teams-router';

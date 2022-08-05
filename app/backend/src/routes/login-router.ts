@@ -4,6 +4,8 @@ import { ILogin } from '../interface';
 import LoginController from '../controller/login-controller';
 import middleware from '../middlewares';
 
+import 'express-async-errors';
+
 const loginRouter: Router = Router();
 
 /** para que a classe LoginController funcionar, ela precisa ser instanciada */

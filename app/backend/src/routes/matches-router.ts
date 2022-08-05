@@ -1,14 +1,13 @@
 import { Request, Response, Router } from 'express';
 
 import MatchesController from '../controller/matches-controller';
-// import TeamsController from '../controller/teams-controller';
 
 import mid from '../middlewares';
+import 'express-async-errors';
 
 const matchesRouters = Router();
 
 const matchesController = new MatchesController();
-// const teamsController = new TeamsController();
 
 matchesRouters.get(
   '/',
@@ -18,17 +17,12 @@ matchesRouters.get(
 matchesRouters.post(
   '/',
   mid.tokenAuthentication,
-  (req: Request, res: Response) => {
-    // teamsController.getTeamById(req, res);
-    matchesController.postMatch(req, res);
-  },
+  (req: Request, res: Response) => matchesController.postMatch(req, res),
 );
 
 matchesRouters.patch(
   '/:id/finish',
   mid.tokenAuthentication,
-  (req: Request, res: Response) => {
-    matchesController.finishMatch(req, res);
-  },
+  (req: Request, res: Response) => matchesController.finishMatch(req, res),
 );
 export default matchesRouters;
