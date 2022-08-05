@@ -26,7 +26,7 @@ class MatchesController {
   public async postMatch(request: Request, response: Response) {
     const match = await this._matchesServices.postMatch(request.body);
 
-    return response.status(StatusCodes.OK).json(match);
+    return response.status(StatusCodes.CREATED).json(match);
   }
 
   public async finishMatch(request: Request, response: Response) {

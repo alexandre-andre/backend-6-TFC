@@ -50,7 +50,7 @@ class MatchesService {
     });
 
     if (teams.count !== 2) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, 'There is no team with such id!');
+      throw new HttpException(StatusCodes.NOT_FOUND, EStatusMessage.idTeamNotFound);
     }
 
     return true;

@@ -56,7 +56,7 @@ export default class LoginServices {
     const user: any = isAuthenticatedToken(token);
 
     if (!user) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.unauthorized);
+      throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.invalidToken);
     }
 
     res.locals.user = user;

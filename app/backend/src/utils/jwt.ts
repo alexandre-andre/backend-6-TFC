@@ -1,6 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 // https://dev.to/francis04j/how-to-add-env-and-use-process-env-to-your-typescript-project-3d6b
 import * as dotenv from 'dotenv';
+import { StatusCodes } from 'http-status-codes';
 import { IUser } from '../database/models/interface';
 import { EStatusMessage, HttpException } from '.';
 
@@ -23,7 +24,7 @@ function generateTokenJWT(payload: IUser) {
 
 function isAuthenticatedToken(token: string) {
   if (!token) {
-    throw new HttpException(404, EStatusMessage.unauthorized);
+    throw new HttpException(StatusCodes.NOT_FOUND, EStatusMessage.unauthorized);
   }
 
   try {
@@ -32,7 +33,7 @@ function isAuthenticatedToken(token: string) {
     return tokenAuthenticated;
   } catch (error: unknown) { // error eh tipo oq ????
     console.error(error);
-    throw new HttpException(401, EStatusMessage.unauthorized);
+    throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.invalidToken);
   }
 }
 
