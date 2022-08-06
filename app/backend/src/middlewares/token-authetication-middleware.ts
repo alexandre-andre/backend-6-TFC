@@ -6,7 +6,7 @@ function tokenAuthentication(req: Request, res: Response, next: NextFunction) {
   const token: string = req.headers.authorization || '';
 
   if (!token) {
-    throw new HttpException(StatusCodes.NOT_FOUND, EStatusMessage.invalidToken);
+    throw new HttpException(StatusCodes.UNAUTHORIZED, EStatusMessage.invalidToken);
   }
 
   const user = isAuthenticatedToken(token);
