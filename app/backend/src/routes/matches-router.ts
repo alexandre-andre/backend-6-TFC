@@ -32,4 +32,10 @@ matchesRouters.patch(
   (req: Request, res: Response) => matchesController.updateMatchInProgess(req, res),
 );
 
+matchesRouters.delete(
+  '/:id',
+  mid.tokenAuthentication,
+  (req: Request, res: Response) => matchesController.deleteMatch(req, res),
+);
+
 export default matchesRouters;

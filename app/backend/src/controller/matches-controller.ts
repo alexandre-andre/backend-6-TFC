@@ -41,6 +41,12 @@ class MatchesController {
 
     return response.status(StatusCodes.OK).json(result);
   }
+
+  public async deleteMatch(request: Request, response: Response) {
+    const result = await this._matchesServices.deleteMatch(request.params.id);
+
+    return response.status(StatusCodes.OK).json(result);
+  }
 }
 
 export default MatchesController;

@@ -104,6 +104,16 @@ class MatchesService {
 
     return `Partida ${matchId} atualizada para: ${match.homeTeamGoals} X ${match.awayTeamGoals}`;
   };
+
+  public deleteMatch = async (id: string) => {
+    const match = await Match.destroy({ where: { id } });
+
+    if (!match) {
+      throw new HttpException(StatusCodes.NOT_FOUND, 'Match not found')
+    };
+
+    return { message: `Match ${id} deleted.` };
+  };
 }
 
 export default MatchesService;
