@@ -20,6 +20,7 @@ const queryAtHome = `
   FROM matches AS m
   INNER JOIN teams AS t
   ON m.home_team = t.id
+  WHERE m.in_progress = false
   GROUP BY name
   ORDER BY
   totalPoints DESC,
@@ -49,6 +50,7 @@ const queryWhenVisitor = `
   FROM matches AS m
   INNER JOIN teams AS t
   ON m.away_team = t.id
+  WHERE m.in_progress = false
   GROUP BY name
   ORDER BY
   totalPoints DESC,
