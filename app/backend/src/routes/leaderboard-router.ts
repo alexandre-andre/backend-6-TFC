@@ -6,7 +6,7 @@ const leaderboardController = new LeaderboardController();
 
 leaderRouter.get(
   '/home',
-  (request: Request, response: Response) => leaderboardController.getLeaderboard(request, response),
+  (request: Request, response: Response) => leaderboardController.getRankAtHome(request, response),
 );
 
 export default leaderRouter;
