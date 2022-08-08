@@ -16,11 +16,11 @@ class LeaderboardController {
     response.status(StatusCodes.OK).json(result);
   }
 
-	public async getRankWhenVisitor(_request: Request, response: Response) {
-		const result = await this.leaderboardService.getRankWhenVisitor();
+  public async getRankWhenVisitor(_request: Request, response: Response) {
+    const result = await this.leaderboardService.getRankWhenVisitor();
 
     response.status(StatusCodes.OK).json(result);
-	}
+  }
 }
 
 export default LeaderboardController;

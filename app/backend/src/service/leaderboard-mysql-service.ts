@@ -1,12 +1,18 @@
 import { QueryTypes } from 'sequelize';
-import { queryAtHome } from '../utils';
+import { queryAtHome, queryWhenVisitor } from '../utils';
 import sequelize from '../database/models';
 
 class leaderboard {
   public getRankAtHome = async () => {
-    const atHome = await sequelize.query(queryAtHome, { type: QueryTypes.SELECT });
+    const ranking = await sequelize.query(queryAtHome, { type: QueryTypes.SELECT });
 
-    return atHome;
+    return ranking;
+  };
+
+  public getRankWhenVisitor = async () => {
+    const ranking = await sequelize.query(queryWhenVisitor, { type: QueryTypes.SELECT });
+
+    return ranking;
   };
 }
 

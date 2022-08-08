@@ -21,13 +21,18 @@ const queryAtHome = `
   INNER JOIN teams AS t
   ON m.home_team = t.id
   GROUP BY name
-  ORDER BY totalPoints DESC, goalsBalance DESC;
+  ORDER BY
+  totalPoints DESC,
+  goalsBalance DESC,
+  goalsFavor DESC;
 `;
 
 const queryWhenVisitor = `
   SELECT
     t.team_name AS name,
-    SUM(3*(m.away_team_goals > m.home_team_goals) + (m.away_team_goals = m.home_team_goals)) AS totalPoints,
+    SUM(
+      3*(m.away_team_goals > m.home_team_goals) + (m.away_team_goals = m.home_team_goals)
+    ) AS totalPoints,
     COUNT(*) AS totalGames,
     SUM(m.away_team_goals > m.home_team_goals) AS totalVictories,
     SUM(m.away_team_goals = m.home_team_goals) AS totalDraws,
@@ -45,6 +50,10 @@ const queryWhenVisitor = `
   INNER JOIN teams AS t
   ON m.away_team = t.id
   GROUP BY name
-  ORDER BY totalPoints DESC, goalsBalance DESC;
-`
+  ORDER BY
+  totalPoints DESC,
+  goalsBalance DESC,
+  goalsFavor DESC;
+`;
+
 export { queryAtHome, queryWhenVisitor };
