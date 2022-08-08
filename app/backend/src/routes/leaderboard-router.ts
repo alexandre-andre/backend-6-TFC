@@ -9,4 +9,9 @@ leaderRouter.get(
   (request: Request, response: Response) => leaderboardController.getRankAtHome(request, response),
 );
 
+leaderRouter.get(
+  '/away',
+  (request: Request, response: Response) => leaderboardController.getRankWhenVisitor(request, response),
+);
+
 export default leaderRouter;

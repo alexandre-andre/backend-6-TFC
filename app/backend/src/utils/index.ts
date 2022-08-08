@@ -1,7 +1,7 @@
 import HttpException from './http-exception';
 import { generateTokenJWT, isAuthenticatedToken } from './jwt';
 import EStatusMessage from './status-message';
-import { queryAtHome } from './leaderboard-queries';
+import { queryAtHome, queryWhenVisitor } from './leaderboard-queries';
 
 const stringUser = 'user';
 const stringPassword = 'password';
@@ -21,6 +21,7 @@ export {
   isEmailRegexValidation,
   HttpException,
   queryAtHome,
+  queryWhenVisitor,
   stringUser,
   stringPassword,
   stringEmail,
