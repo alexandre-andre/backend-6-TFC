@@ -15,4 +15,10 @@ leaderRouter.get(
     leaderboardController.getRankWhenVisitor(request, response),
 );
 
+leaderRouter.get(
+  '/',
+  (request: Request, response: Response) =>
+    leaderboardController.getRank(request, response),
+);
+
 export default leaderRouter;

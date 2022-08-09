@@ -14,6 +14,17 @@ class leaderboard {
 
     return ranking;
   };
+
+  public getRank = async () => {
+    const getHome = await this.getRankAtHome();
+    const getVisitor = await this.getRankWhenVisitor();
+
+    const generalRank = getVisitor.map((e) => 
+      e
+    )
+
+    return generalRank;
+  };
 }
 
 export default leaderboard;
