@@ -1,5 +1,5 @@
 # Projeto Futebol Clube!
-  ![Exemplo app front](assets/front-example.png)
+  file:///home/andre/Imagens/Capturas%20de%20tela/Captura%20de%20tela%20de%202022-11-21%2020-33-22.png
 
   O `TFC` é um site informativo sobre partidas e classificações de futebol! ⚽️
 
